@@ -47,8 +47,8 @@ def on_click_mouse(x, y, button, pressed):
     if not pressed and button == mouse.Button.right:
         # Stop listener
         return False
-
-if __name__ == "__main__":
+    
+def main():
     thread1 = threading.Thread(target=listeners)
     thread2 = threading.Thread(target=observers)
 
@@ -58,4 +58,30 @@ if __name__ == "__main__":
     thread1.join()
     thread2.join()
 
-    print("tasks done")
+def test(window):
+    for i in psutil.pids():
+        print(psutil.Process(i).name())
+    # process = psutil.Process(pid)
+    # executable_path = process.exe()
+
+    # if "chrome.exe" in executable_path.lower():
+    #     return "Chrome"
+    # elif "code.exe" in executable_path.lower():
+    #     return "VS Code"
+    # else:
+    #     return "Unknown"
+
+    
+if __name__ == "__main__":
+    # main()
+
+    active_window = gw.getActiveWindow()
+
+    if active_window:
+        window_type = test(active_window)
+        print("Active window type:", window_type)
+    else:
+        print("No active window found.")
+
+
+    # print("tasks done")

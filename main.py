@@ -1,6 +1,6 @@
 from pynput import mouse, keyboard
 import pygetwindow as gw
-import threading
+# import threading
 import psutil
 import json
 from datetime import datetime
@@ -80,6 +80,28 @@ current_data = {
     '/': 0,
     'SPACE': 0
 }
+special_char_dict = {
+    keyboard.Key.space: 'SPACE',
+    keyboard.Key.tab: 'TAB',
+    keyboard.Key.caps_lock: 'CAPSLOCK',
+    keyboard.Key.shift: 'SHIFT',
+    keyboard.Key.backspace: 'BACKSPACE',
+    keyboard.Key.enter: 'ENTER',
+    keyboard.Key.space: 'SPACE',
+    keyboard.Key.esc: 'ESC',
+    keyboard.Key.delete: 'DELETE',
+    keyboard.Key.end: 'END',
+    keyboard.Key.page_down: 'PAGEDOWN',
+    keyboard.Key.page_up: 'PAGEUP',
+    keyboard.Key.home: 'HOME',
+    keyboard.Key.print_screen: 'PRINTSCREEN',
+    keyboard.Key.scroll_lock: 'SCROLLLOCK',
+    keyboard.Key.insert: 'INSERT',
+    keyboard.Key.up: 'UP',
+    keyboard.Key.down: 'DOWN',
+    keyboard.Key.left: 'LEFT',
+    keyboard.Key.right: 'RIGHT'
+}
 
 def observers():
     prev_active_window = gw.getActiveWindow()
@@ -108,7 +130,8 @@ def on_press_keyboard(key):
         print(f"{key.char}: {ord(key.char)}")
         if key.char == 'x':
             return False
-    except:
+    except Exception as e:
+        print(f"Error: {str(e)}")
         print('{0}'.format(
             key))
         
@@ -143,7 +166,13 @@ def get_current_day():
     return f"{year}-{month}-{day}"
 
 def analyze_keypress(key):
-    pass
+    try:
+        current_data.update({key.char: current_data.get(key.char) + 1})
+    except: # special keys
+        if special_char_dict.get(key) != None:
+            current_data.update({special_char_dict.get(key): current_data.get(special_char_dict.get(key)) + 1})
+        else:
+            print(f"logging error - key: {key} not counted")
 
 def test(window):
     for i in psutil.pids():

@@ -170,17 +170,17 @@ pair_char_dict = {
 
 window_closed = False
 
-def observers():
-    prev_active_window = gw.getActiveWindow()
+# def observers():
+#     prev_active_window = gw.getActiveWindow()
 
-    while True:
-        active_window = gw.getActiveWindow()
+#     while True:
+#         active_window = gw.getActiveWindow()
 
-        if active_window and active_window != prev_active_window:
-            prev_active_window = active_window
-            print(f"{active_window.title} at {id(active_window)}")
+#         if active_window and active_window != prev_active_window:
+#             prev_active_window = active_window
+#             print(f"{active_window.title} at {id(active_window)}")
 
-    return
+#     return
 
 def listeners():
     mouse_listener = mouse.Listener(on_click=on_click_mouse)
@@ -284,18 +284,18 @@ def tkwindow():
     if window_closed:
         print("Closed")    
 
-def test(window):
-    for i in psutil.pids():
-        print(psutil.Process(i).name())
-    # process = psutil.Process(pid)
-    # executable_path = process.exe()
-
-    # if "chrome.exe" in executable_path.lower():
-    #     return "Chrome"
-    # elif "code.exe" in executable_path.lower():
-    #     return "VS Code"
-    # else:
-    #     return "Unknown"
+# def test(window):
+#     for i in psutil.pids():
+#         print(psutil.Process(i).name())
+#     process = psutil.Process(pid)
+#     executable_path = process.exe()
+#
+#     if "chrome.exe" in executable_path.lower():
+#         return "Chrome"
+#     elif "code.exe" in executable_path.lower():
+#         return "VS Code"
+#     else:
+#         return "Unknown"
 
 if __name__ == '__main__':
     listeners()

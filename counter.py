@@ -118,6 +118,55 @@ special_char_dict = {
     keyboard.Key.alt_l: 'ALT',
     keyboard.Key.cmd: 'WIN'
 }
+pair_char_dict = {
+    'A': 'a',
+    'B': 'b',
+    'C': 'c',
+    'D': 'd',
+    'E': 'e',
+    'F': 'f',
+    'G': 'g',
+    'H': 'h',
+    'I': 'i',
+    'J': 'j',
+    'K': 'k',
+    'L': 'l',
+    'M': 'm',
+    'N': 'n',
+    'O': 'o',
+    'P': 'p',
+    'Q': 'q',
+    'R': 'r',
+    'S': 's',
+    'T': 't',
+    'U': 'u',
+    'V': 'v',
+    'W': 'w',
+    'X': 'x',
+    'Y': 'y',
+    'Z': 'z',
+    '~': '`',
+    '!': '1',
+    '@': '2',
+    '#': '3',
+    '$': '4',
+    '%': '5',
+    '^': '6',
+    '&': '7',
+    '*': '8',
+    '(': '9',
+    ')': '0',
+    '_': '-',
+    '+': '=',
+    '{': '[',
+    '}': ']',
+    '|': '\\',
+    ':': ';',
+    '"': '\'',
+    '<': ',',
+    '>': '.',
+    '?': '/'
+}
 
 window_closed = False
 
@@ -200,9 +249,12 @@ def get_current_day():
 
 def analyze_keypress(key):
     try:
-        current_data.update({key.char: current_data.get(key.char) + 1})
+        if key.char in pair_char_dict:
+            current_data.update({pair_char_dict.get(key.char): current_data.get(pair_char_dict.get(key.char)) + 1})
+        else:
+            current_data.update({key.char: current_data.get(key.char) + 1})
     except: # special keys
-        if special_char_dict.get(key) != None:
+        if key in special_char_dict:
             current_data.update({special_char_dict.get(key): current_data.get(special_char_dict.get(key)) + 1})
         else:
             print(f"logging error - key: {key} not counted")
@@ -246,4 +298,4 @@ def test(window):
     #     return "Unknown"
 
 if __name__ == '__main__':
-    main()
+    listeners()

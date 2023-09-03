@@ -79,13 +79,26 @@ current_data = {
     ',': 0,
     '.': 0,
     '/': 0,
-    'SPACE': 0
+    'SPACE': 0,
+    '1': 0,
+    '2': 0,
+    '3': 0,
+    '4': 0,
+    '5': 0,
+    '6': 0,
+    '7': 0,
+    '8': 0,
+    '9': 0,
+    '0': 0,
+    'WIN': 0,
+    'ALT': 0
 }
 special_char_dict = {
     keyboard.Key.space: 'SPACE',
     keyboard.Key.tab: 'TAB',
     keyboard.Key.caps_lock: 'CAPSLOCK',
     keyboard.Key.shift: 'SHIFT',
+    keyboard.Key.ctrl_l: 'CTRL',
     keyboard.Key.backspace: 'BACKSPACE',
     keyboard.Key.enter: 'ENTER',
     keyboard.Key.esc: 'ESC',
@@ -100,7 +113,9 @@ special_char_dict = {
     keyboard.Key.up: 'UP',
     keyboard.Key.down: 'DOWN',
     keyboard.Key.left: 'LEFT',
-    keyboard.Key.right: 'RIGHT'
+    keyboard.Key.right: 'RIGHT',
+    keyboard.Key.alt_l: 'ALT',
+    keyboard.Key.cmd: 'WIN'
 }
 
 def observers():

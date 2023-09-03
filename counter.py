@@ -1,10 +1,11 @@
 from pynput import mouse, keyboard
 import pygetwindow as gw
-# import threading
+import threading
 import psutil
 import json
 from datetime import datetime
 from pprint import pprint
+import tkinter as tk
 
 current_data = {
     'lclick': 0,
@@ -118,6 +119,8 @@ special_char_dict = {
     keyboard.Key.cmd: 'WIN'
 }
 
+window_closed = False
+
 def observers():
     prev_active_window = gw.getActiveWindow()
 
@@ -141,10 +144,11 @@ def listeners():
     key_listener.join()
 
 def on_press_keyboard(key):
+    if window_closed:
+        return False
+    
     try:
         print(f"{key.char}: {ord(key.char)}")
-        if key.char == 'x':
-            return False
     except Exception as e:
         print(f"Error: {str(e)}")
         print('{0}'.format(
@@ -153,6 +157,9 @@ def on_press_keyboard(key):
     analyze_keypress(key)
 
 def on_click_mouse(x, y, button, pressed):
+    if window_closed:
+        return False
+    
     print('{0} {1} at {2}'.format(
         'Pressed' if pressed else 'Released',
         'Left' if button == mouse.Button.left else 'Right',
@@ -162,19 +169,15 @@ def on_click_mouse(x, y, button, pressed):
     else:
         current_data.update({'rclick': current_data.get('rclick') + 1})
     
-    if not pressed and button == mouse.Button.right:
-        # Stop listener
-        return False
-    
 def main():
-    # thread1 = threading.Thread(target=listeners)
-    # thread2 = threading.Thread(target=observers)
+    thread1 = threading.Thread(target=listeners)
+    thread2 = threading.Thread(target=tkwindow)
 
-    # thread1.start()
-    # thread2.start()
+    thread1.start()
+    thread2.start()
 
-    # thread1.join()
-    # thread2.join()
+    thread1.join()
+    thread2.join()
 
     listeners()
 
@@ -185,6 +188,7 @@ def main():
             "Count": current_data.get(key)
         })
     
+    print("returned")
     return result
 
 def get_current_day():
@@ -208,6 +212,25 @@ def update(target: dict, sample: list):
         target['KeyPresses'][i]['Count'] += sample[i]['Count']
     
     return target
+
+def tkwindow():
+    def onClosing():
+        global window_closed
+        window_closed = True
+        window.destroy()
+
+    window = tk.Tk()
+    window.title("Key Counter")
+    window.geometry("200x100")
+
+    tk.Label(window, text="Close this window to stop counting").pack()
+
+    window.protocol("WM_DELETE_WINDOW", onClosing)
+
+    window.mainloop()
+
+    if window_closed:
+        print("Closed")    
 
 def test(window):
     for i in psutil.pids():

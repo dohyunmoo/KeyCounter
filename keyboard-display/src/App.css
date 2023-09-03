@@ -1,5 +1,6 @@
 .App {
   text-align: center;
+  color: azure;
 }
 
 .App-logo {
@@ -15,10 +16,11 @@
   margin-top: 20px;
 }
 
-button {
+.key-button {
   padding: 10px 20px;
   font-size: 16px;
   cursor: pointer;
+  background-color: gray;
 }
 
 @media (prefers-reduced-motion: no-preference) {

@@ -111,12 +111,25 @@ special_char_dict = {
     keyboard.Key.print_screen: 'PRINTSCREEN',
     keyboard.Key.scroll_lock: 'SCROLLLOCK',
     keyboard.Key.insert: 'INSERT',
+    keyboard.Key.pause: 'PAUSE',
     keyboard.Key.up: 'UP',
     keyboard.Key.down: 'DOWN',
     keyboard.Key.left: 'LEFT',
     keyboard.Key.right: 'RIGHT',
     keyboard.Key.alt_l: 'ALT',
-    keyboard.Key.cmd: 'WIN'
+    keyboard.Key.cmd: 'WIN',
+    keyboard.Key.f1: 'F1',
+    keyboard.Key.f2: 'F2',
+    keyboard.Key.f3: 'F3',
+    keyboard.Key.f4: 'F4',
+    keyboard.Key.f5: 'F5',
+    keyboard.Key.f6: 'F6',
+    keyboard.Key.f7: 'F7',
+    keyboard.Key.f8: 'F8',
+    keyboard.Key.f9: 'F9',
+    keyboard.Key.f10: 'F10',
+    keyboard.Key.f11: 'F11',
+    keyboard.Key.f12: 'F12'
 }
 pair_char_dict = {
     'A': 'a',
@@ -215,7 +228,7 @@ def on_click_mouse(x, y, button, pressed):
         (x, y)))
     if button == mouse.Button.left:
         current_data.update({'lclick': current_data.get('lclick') + 1})
-    else:
+    elif button == mouse.Button.right:
         current_data.update({'rclick': current_data.get('rclick') + 1})
     
 def main():
@@ -244,6 +257,11 @@ def get_current_day():
     year = datetime.now().year
     month = datetime.now().month
     day = datetime.now().day
+
+    if int(day) < 10:
+        day = f'0{day}'
+
+    print(f"{year}-{month}-{day}")
 
     return f"{year}-{month}-{day}"
 

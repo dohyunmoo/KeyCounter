@@ -9,7 +9,7 @@ firebase_admin.initialize_app(cred)
 db = firestore.client()
 
 doc_ref = db.collection("KeyCounts").document(counter.get_current_day())
-    
+
 if __name__ == "__main__":
     result = counter.main()
 
@@ -19,12 +19,8 @@ if __name__ == "__main__":
             data = doc_snapshot.to_dict()
             updated = counter.update(target=data, sample=result)
 
-            doc_ref.set(
-                updated
-            )
+            doc_ref.set(updated)
         else:
-            doc_ref.set({
-                "KeyPresses": result
-            })
+            doc_ref.set({"KeyPresses": result})
     except Exception as e:
         print(f"failure with {e}")

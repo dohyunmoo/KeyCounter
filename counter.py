@@ -22,6 +22,7 @@ window_closed = False
 
 #     return
 
+
 def listeners():
     mouse_listener = mouse.Listener(on_click=on_click_mouse)
     key_listener = keyboard.Listener(on_press=on_press_keyboard)
@@ -32,32 +33,37 @@ def listeners():
     mouse_listener.join()
     key_listener.join()
 
+
 def on_press_keyboard(key):
     if window_closed:
         return False
-    
+
     try:
         print(f"{key.char}: {ord(key.char)}")
     except Exception as e:
         print(f"Error: {str(e)}")
-        print('{0}'.format(
-            key))
-        
+        print("{0}".format(key))
+
     analyze_keypress(key)
+
 
 def on_click_mouse(x, y, button, pressed):
     if window_closed:
         return False
-    
-    print('{0} {1} at {2}'.format(
-        'Pressed' if pressed else 'Released',
-        'Left' if button == mouse.Button.left else 'Right',
-        (x, y)))
+
+    print(
+        "{0} {1} at {2}".format(
+            "Pressed" if pressed else "Released",
+            "Left" if button == mouse.Button.left else "Right",
+            (x, y),
+        )
+    )
     if button == mouse.Button.left:
-        data.current_data.update({'lclick': data.current_data.get('lclick') + 1})
+        data.current_data.update({"lclick": data.current_data.get("lclick") + 1})
     elif button == mouse.Button.right:
-        data.current_data.update({'rclick': data.current_data.get('rclick') + 1})
-    
+        data.current_data.update({"rclick": data.current_data.get("rclick") + 1})
+
+
 def main():
     thread1 = threading.Thread(target=listeners)
     thread2 = threading.Thread(target=tkwindow)
@@ -72,13 +78,11 @@ def main():
 
     result = []
     for key in data.current_data:
-        result.append({
-            "KeyLabel": key,
-            "Count": data.current_data.get(key)
-        })
-    
+        result.append({"KeyLabel": key, "Count": data.current_data.get(key)})
+
     print("returned")
     return result
+
 
 def get_current_day():
     year = datetime.now().year
@@ -86,29 +90,46 @@ def get_current_day():
     day = datetime.now().day
 
     if int(day) < 10:
-        day = f'0{day}'
+        day = f"0{day}"
 
     print(f"{year}-{month}-{day}")
 
     return f"{year}-{month}-{day}"
 
+
 def analyze_keypress(key):
     try:
         if key.char in data.pair_char_dict:
-            data.current_data.update({data.pair_char_dict.get(key.char): data.current_data.get(data.pair_char_dict.get(key.char)) + 1})
+            data.current_data.update(
+                {
+                    data.pair_char_dict.get(key.char): data.current_data.get(
+                        data.pair_char_dict.get(key.char)
+                    )
+                    + 1
+                }
+            )
         else:
             data.current_data.update({key.char: data.current_data.get(key.char) + 1})
-    except: # special keys
+    except:  # special keys
         if key in data.special_char_dict:
-            data.current_data.update({data.special_char_dict.get(key): data.current_data.get(data.special_char_dict.get(key)) + 1})
+            data.current_data.update(
+                {
+                    data.special_char_dict.get(key): data.current_data.get(
+                        data.special_char_dict.get(key)
+                    )
+                    + 1
+                }
+            )
         else:
             print(f"logging error - key: {key} not counted")
 
+
 def update(target: dict, sample: list):
     for i in range(len(sample)):
-        target['KeyPresses'][i]['Count'] += sample[i]['Count']
-    
+        target["KeyPresses"][i]["Count"] += sample[i]["Count"]
+
     return target
+
 
 def tkwindow():
     def onClosing():
@@ -127,7 +148,8 @@ def tkwindow():
     window.mainloop()
 
     if window_closed:
-        print("Closed")    
+        print("Closed")
+
 
 # def test(window):
 #     for i in psutil.pids():
@@ -142,5 +164,5 @@ def tkwindow():
 #     else:
 #         return "Unknown"
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     listeners()

@@ -1,5 +1,11 @@
 import React from 'react';
 import './App.css';
+// import { initializeApp } from 'firebase/App';
+// import { getFirestore, collection, getDocs } from 'firebase/firestore/lite';
+
+// const firebaseConfig = {
+    
+// }
 
 class Key{
     constructor(label, width=1) {
@@ -7,10 +13,10 @@ class Key{
         this.width = width;
     }
     getWidth() {
-        return this.width
+        return this.width;
     }
     getLabel() {
-        return this.label
+        return this.label;
     }
 }
 
@@ -23,23 +29,72 @@ function App() {
     const row5 = [new Key("SHIFT", 2), new Key("Z"), new Key("X"), new Key("C"), new Key("V"), new Key("B"), new Key("N"), new Key("M"), new Key(","), new Key("."), new Key("/"), new Key("SHIFT", 2)]
     const row6 = [new Key("CTRL", 1.3), new Key("WIN"), new Key("ALT", 1.2), new Key("SPACE", 7), new Key("ALT", 1.2), new Key("FN"), new Key("CTRL", 1.3)]
 
+    const specKeys = [[new Key("PRINT SCREEN"), new Key("SCROLL LOCK"), new Key("PAUSE")],
+                     [new Key("INSERT"), new Key("HOME"), new Key("PAGE UP")],
+                     [new Key("DELETE"), new Key("END"), new Key("PAGE DOWN")]]
+    const arrowKeys = [[new Key("\u2191")], [new Key("\u2190"), new Key("\u2193"), new Key("\u2192")]] // up left down right
+
     const keyboardRows = [row1, row2, row3, row4, row5, row6]
+
+    const unitLength = 40
 
     return (
         <div className="App">
             <h1>Virtual Keyboard</h1>
-        
-            {keyboardRows.map((row, rowIndex) => (
-                <div key={`row-${rowIndex}`} className="keyboard">
-                {row.map((letter) => (
-                    <div key={letter.getLabel()} className="key-button" style={{ width: `${letter.getWidth() * 50}px` }}>
-                        {letter.getLabel()}
-                    </div>
-                ))}
+
+            <div id='keyboard'>
+
+                <div id='mainKeyGroup'>
+                    {keyboardRows.map((row, rowIndex) => (
+                        <div key={`row-${rowIndex}`} className="Keys">
+                            {row.map((letter) => (
+                                <div key={letter.getLabel()} className="key-button" style={{ width: `${letter.getWidth() * unitLength}px` }}>
+                                    {letter.getLabel()}
+                                </div>
+                            ))}
+                        </div>
+                    ))}
                 </div>
-            ))}
+
+                <div id='sideKeyGroup'>
+                    <div id='specKeyGroup'>
+                        {specKeys.map((row, rowIndex) => (
+                            <div key={`row-${rowIndex}`} className="Keys">
+                                {row.map((letter) => (
+                                    <div key={letter.getLabel()} className="key-button" style={{ width: `${letter.getWidth() * unitLength}px` }}>
+                                        {letter.getLabel()}
+                                    </div>
+                                ))}
+                            </div>
+                        ))}
+                    </div>
+
+                    <div id='filler'>
+                        <div className='Keys'>
+                            <div className='filler-key-button'></div>
+                        </div>
+                    </div>
+
+                    <div id='arrowKeyGroup'>
+                        {arrowKeys.map((row, rowIndex) => (
+                            <div key={`row-arrow-${rowIndex}`} className="Keys">
+                                {row.map((letter) => (
+                                    <div key={letter.getLabel()} className="key-button" style={{ width: `${letter.getWidth() * unitLength}px` }}>
+                                        {letter.getLabel()}
+                                    </div>
+                                ))}
+                            </div>
+                        ))}
+                    </div>
+                </div>
+
+            <div id='mouse'>
+                
+            </div>
+
+            </div>
         </div>
-      );
+    );
 }
 
 export default App;

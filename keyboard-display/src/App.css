@@ -8,19 +8,76 @@
   pointer-events: none;
 }
 
-.keyboard {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 10px;
-  margin-top: 20px;
+#keyboard {
+    width: 100%;
+    display: inline-block;
+    box-sizing: border-box;
+    font-size: 0;
+    margin: 0;
+    padding: 0;
+}
+
+#mainKeyGroup {
+    width: 75%;
+    background-color: blue;
+    box-sizing: border-box;
+    font-size: initial;
+    /* margin: 0; */
+    padding: 0;
+    position: relative;
+}
+
+#sideKeyGroup {
+    width: 25%;
+    background-color: red;
+    box-sizing: border-box;
+    font-size: initial;
+    /* margin: 0; */
+    padding: 0;
+    position: relative;
+}
+
+.Keys {
+    width: 100%;
+    /* padding-left: 10px; */
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 10px;
 }
 
 .key-button {
-  padding: 10px 20px;
-  font-size: 16px;
-  cursor: pointer;
-  background-color: gray;
+    padding: 10px 20px;
+    font-size: 14px;
+    cursor: pointer;
+    background-color: gray;
+    height: 40px;
+    display: grid;
+    place-items: center;
+    border-radius: 5px;
+}
+
+.key-button:hover {
+    animation: button-change 0.5s infinite
+}
+
+.filler-key-button {
+    padding: 10px 20px;
+    font-size: 14px;
+    cursor: pointer;
+    background-color: transparent;
+    height: 40px;
+    display: grid;
+    place-items: center;
+}
+
+#mouse {
+    width: 200px;
+    height: 300px;
+    background-color: blue;
+    border-radius: 50%;
+    position: relative;
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -51,4 +108,19 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+@keyframes button-change {
+    0% {
+        height: 40px;
+        background-color: grey;
+    }
+    50% {
+        height: 50px;
+        background-color: green;
+    }
+    100% {
+        height: 40px;
+        background-color: grey;
+    }
 }

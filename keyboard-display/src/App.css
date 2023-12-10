@@ -9,7 +9,7 @@
 }
 
 #keyboard {
-    width: 100%;
+    width: 100vw;
     display: inline-block;
     box-sizing: border-box;
     font-size: 0;

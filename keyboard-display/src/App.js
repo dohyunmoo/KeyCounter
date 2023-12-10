@@ -1,11 +1,23 @@
 import React from 'react';
 import './App.css';
 // import { initializeApp } from 'firebase/App';
-// import { getFirestore, collection, getDocs } from 'firebase/firestore/lite';
+// import { getFirestore } from 'firebase/firestore';
 
-// const firebaseConfig = {
-    
-// }
+let jsonData
+
+fetch('../../.secret/credentials.json')
+    .then(response => response.json())
+    .then(data => {
+        jsonData = data;
+        console.log(jsonData);
+    })
+    .catch(error => {
+        console.error('Error fetching the JSON file:', error);
+});
+
+const firebaseConfig = {
+    apiKey: "AIzaSyDNFYGIFDVdiaFh4ubixHTUiIh2NSCThqw"
+}
 
 class Key{
     constructor(label, width=1) {
